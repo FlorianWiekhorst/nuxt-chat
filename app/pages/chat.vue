@@ -2,6 +2,8 @@
 import useChat from "../composables/useChat";
 
 const { chat, messages, sendMessage } = useChat();
+
+// const appConfig = useAppConfig();
 </script>
 
 <template>
