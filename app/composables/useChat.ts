@@ -3,10 +3,10 @@ import { MOCK_CHAT } from "./mockData";
 
 export default function useChat() {
   const chat = ref<Chat>(MOCK_CHAT);
-  const messsages = computed<ChatMessage[]>(() => chat.value.messages);
+  const messages = computed<ChatMessage[]>(() => chat.value.messages);
 
   function createMessage(message: string, role: ChatMessage["role"]) {
-    const id = messsages.value.length.toString();
+    const id = messages.value.length.toString();
 
     return {
       id,
@@ -15,22 +15,22 @@ export default function useChat() {
     };
   }
 
-  function sendMessage(message: string) {
-    messsages.value.push(createMessage(message, "user"));
+  async function sendMessage(message: string) {
+    messages.value.push(createMessage(message, "user"));
 
-    setTimeout(() => {
-      messsages.value.push(
-        createMessage(
-          "This is a mock response from the assistant.",
-          "assistant"
-        )
-      );
-    }, 200);
+    const data = await $fetch<ChatMessage>("/api/ai", {
+      method: "POST",
+      body: {
+        messages: messages.value,
+      },
+    });
+
+    messages.value.push(data);
   }
 
   return {
     chat,
-    messsages,
+    messages,
     sendMessage,
   };
 }
