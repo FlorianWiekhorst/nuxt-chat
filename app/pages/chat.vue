@@ -1,11 +1,9 @@
 <script setup lang="ts">
-const { chat, messages, sendMessage } = useChat();
+import useChat from "../composables/useChat";
 
-useHead({
-  title: chat.value.title,
-});
+const { chat, messages, sendMessage } = useChat();
 </script>
 
 <template>
-  <ChatWindow :chat :messages @send-message="sendMessage" />
+  <ChatWindow :chat="chat" :messages="messages" @send-message="sendMessage" />
 </template>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { defineEmits, watch } from "vue";
 import type { ChatMessage, Chat } from "../types";
+import useChatScroll from "../composables/useChatScroll";
 
 const props = defineProps<{
   messages: ChatMessage[];

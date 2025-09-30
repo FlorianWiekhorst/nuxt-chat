@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { defineProps, ref, nextTick, onMounted, watch } from "vue";
+
 const { isStreaming = false } = defineProps<{
   isStreaming?: boolean;
 }>();
@@ -7,7 +9,7 @@ const emit = defineEmits<{
   (e: "send-message", message: string): void;
 }>();
 
-const textareaRef = useTemplateRef("textareaRef");
+const textareaRef = ref<HTMLTextAreaElement | null>(null);
 const newMessage = ref("");
 
 const handleSendMessage = () => {
